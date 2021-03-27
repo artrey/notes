@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block main %}
+  <div class="container-xl">
+    <p>{{ note.author }}</p>
+    <p>{{ note.title|default_if_none:'' }}</p>
+    <p>{{ note.text }}</p>
+
+    {% if user == note.author %}
+      <a href="{% url 'note-delete' note.id %}">Удалить</a>
+      <a href="{% url 'note-edit' note.id %}">Изменить</a>
+    {% endif %}
+  </div>
+{% endblock %}

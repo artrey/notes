@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block main %}
+  <div class="container-xl">
+    <form method="get">
+      <label>
+        Найти заметку:
+        <input type="search" name="q" value="{{ request.GET.q }}"/>
+        <input type="hidden" name="mode" value="{{ request.GET.mode }}"/>
+        <input type="hidden" name="page" value="1"/>
+      </label>
+      <button type="submit">Найти</button>
+    </form>
+
+    {% for note in object_list %}
+      <p>{{ note.author }}</p>
+      <p>{{ note.title|default_if_none:'' }}</p>
+      <p><a href="{{ note.get_absolute_url }}">{{ note.text }}</a></p>
+    {% empty %}
+      <p>Пока нет заметок, которые вы можете видеть</p>
+    {% endfor %}
+
+    {% if is_paginated %}
+      {% if prev_url %}
+        <a href="{{ prev_url }}">Предыдущая</a>
+      {% endif %}
+      {{ page_obj.number }}
+      {% if next_url %}
+        <a href="{{ next_url }}">Следующая</a>
+      {% endif %}
+    {% endif %}
+  </div>
+{% endblock %}

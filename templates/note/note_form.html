@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block main %}
+  <div class="container-xl">
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Сохранить</button>
+    </form>
+    <a href="{{ note.get_absolute_url }}">Назад</a>
+  </div>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block main %}
+  <div class="container-xl">
+    <p>Вы действительно хотите удалить заметку?</p>
+    <p>{{ note.author }}</p>
+    <p>{{ note.title|default_if_none:'' }}</p>
+    <p>{{ note.text }}</p>
+
+    <form method="post">
+      {% csrf_token %}
+      <button type="submit">Да</button>
+    </form>
+    <a href="{{ note.get_absolute_url }}">Нет</a>
+  </div>
+{% endblock %}
