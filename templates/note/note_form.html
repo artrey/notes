@@ -1,12 +1,11 @@
 {% extends 'base.html' %}
 
 {% block main %}
-  <div class="container-xl">
-    <form method="post">
-      {% csrf_token %}
-      {{ form.as_p }}
-      <button type="submit">Сохранить</button>
-    </form>
-    <a href="{{ note.get_absolute_url }}">Назад</a>
-  </div>
+  {% include 'partial/form.html' with btn_text='Сохранить' %}
+
+  {% if note.id %}
+    <div class="centered-content">
+      <a href="{{ note.get_absolute_url }}" class="btn btn-secondary">Назад</a>
+    </div>
+  {% endif %}
 {% endblock %}

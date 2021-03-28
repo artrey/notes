@@ -1,0 +1,19 @@
+<div class="card note-card">
+  <div class="card-header note-card-header">
+    <div>{{ note.title|default:'Без названия' }}</div>
+    <div>{{ note.author.get_full_name|default:note.author.username }}</div>
+  </div>
+  <div class="card-body">
+    <p class="card-text">
+      {% if request.path == note.get_absolute_url %}
+        {{ note.text|linebreaksbr }}
+      {% else %}
+        {{ note.text|truncatechars:100|linebreaksbr }}
+      {% endif %}
+    </p>
+
+    {% if request.path != note.get_absolute_url %}
+      <a href="{{ note.get_absolute_url }}" class="btn btn-primary">Открыть</a>
+    {% endif %}
+  </div>
+</div>

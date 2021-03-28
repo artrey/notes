@@ -2,5 +2,6 @@ django
 python-dotenv
 psycopg2-binary
 django-registration
+django-crispy-forms
 gunicorn  # for heroku
 django-heroku  # for heroku

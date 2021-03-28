@@ -1,16 +1,14 @@
 {% extends 'base.html' %}
 
 {% block main %}
-  <div class="container-xl">
-    <p>Вы действительно хотите удалить заметку?</p>
-    <p>{{ note.author }}</p>
-    <p>{{ note.title|default_if_none:'' }}</p>
-    <p>{{ note.text }}</p>
+  <p>Вы действительно хотите удалить заметку?</p>
+  {% include 'partial/note.html' %}
 
-    <form method="post">
-      {% csrf_token %}
-      <button type="submit">Да</button>
-    </form>
-    <a href="{{ note.get_absolute_url }}">Нет</a>
-  </div>
+  <form method="post">
+    {% csrf_token %}
+    <div class="centered-content">
+      <button type="submit" class="btn btn-danger">Да</button>
+      <a href="{{ note.get_absolute_url }}" class="btn btn-secondary">Нет</a>
+    </div>
+  </form>
 {% endblock %}

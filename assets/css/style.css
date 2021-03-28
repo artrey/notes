@@ -4,8 +4,17 @@ body {
   min-height: 100vh;
 }
 
+form > * {
+  margin: 10px 0;
+}
+
+form > button[type="submit"] {
+  text-align: center;
+}
+
 .header {
-  background-color: rgba(70, 26, 105, 0.67);
+  background-color: rgb(129, 163, 240);
+  padding: 10px 0;
 }
 
 .header > div {
@@ -31,7 +40,7 @@ body {
 
 .header__profile__bio {
   font-size: 18px;
-  color: white;
+  color: black;
 }
 
 .header__controls {
@@ -44,14 +53,48 @@ body {
   margin-right: 10px;
   padding-left: 10px;
   padding-right: 10px;
-  color: white;
+  color: black;
   text-decoration: none;
   font-size: 18px;
   border: solid 1px transparent;
   border-radius: 5px;
+  width: fit-content;
 }
 
 .header__controls__link:hover {
-  color: white;
-  border-color: white;
+  color: black;
+  border-color: black;
+}
+
+.main {
+  padding: 20px 0;
+}
+
+.centered-content {
+  text-align: center;
+}
+
+.note-card {
+  margin: 10px 0;
+}
+
+.note-card-header {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.note-card-header > div:first-child {
+  margin-right: 20px;
+}
+
+@media screen and (max-width: 800px) {
+  .header__controls {
+    flex-direction: column;
+  }
+
+  .header__controls__link {
+    text-align: center;
+  }
 }

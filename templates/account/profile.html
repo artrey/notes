@@ -1,11 +1,5 @@
 {% extends 'base.html' %}
 
 {% block main %}
-  <div class="container-xl">
-    <form method="post">
-      {% csrf_token %}
-      {{ form.as_p }}
-      <button type="submit">Сохранить</button>
-    </form>
-  </div>
+  {% include 'partial/form.html' with btn_text='Сохранить' %}
 {% endblock %}

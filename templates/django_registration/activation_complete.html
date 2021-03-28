@@ -1,8 +1,6 @@
-{% extends 'base.html' %}
+{% extends 'centered.html' %}
 
-{% block main %}
-  <div class="container-xl">
-    <p>Ваша учетная запись успешно активирована :)</p>
-    <a href="{% url 'login' %}">Войти</a>
-  </div>
+{% block content %}
+  <p>Ваша учетная запись успешно активирована :)</p>
+  <a href="{% url 'login' %}" class="btn btn-primary">Войти</a>
 {% endblock %}
