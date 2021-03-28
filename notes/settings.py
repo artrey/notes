@@ -37,7 +37,6 @@ def as_bool(value) -> bool:
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = as_bool(os.getenv('DEBUG', False))
-print(DEBUG)
 
 
 def comma_separated_list(value: str) -> list:
