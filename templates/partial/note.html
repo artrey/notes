@@ -16,4 +16,10 @@
       <a href="{{ note.get_absolute_url }}" class="btn btn-primary">Открыть</a>
     {% endif %}
   </div>
+  <div class="card-footer text-muted">
+    <div>Создано: {{ note.created_at }}</div>
+    {% if note.updated_at != note.created_at %}
+      <div>Обновлено: {{ note.updated_at }}</div>
+    {% endif %}
+  </div>
 </div>
