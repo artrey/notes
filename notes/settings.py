@@ -10,10 +10,14 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
+import os
 from pathlib import Path
-from decouple import config
+
 from django.urls import reverse_lazy
 import django_heroku
+from dotenv import load_dotenv
+
+load_dotenv()  # take environment variables from .env.
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -22,17 +26,25 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config('SECRET_KEY', default='the-best-secret-key')
+SECRET_KEY = os.getenv('SECRET_KEY', 'the-best-secret-key')
+
+
+def as_bool(value) -> bool:
+    if isinstance(value, bool):
+        return value
+    return value.lower() in ('1', 'true', 'yes')
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DEBUG', default=False, cast=bool)
+DEBUG = as_bool(os.getenv('DEBUG', False))
+print(DEBUG)
 
 
 def comma_separated_list(value: str) -> list:
     return [x.strip() for x in value.split(',') if x.strip()]
 
 
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='*', cast=comma_separated_list)
+ALLOWED_HOSTS = comma_separated_list(os.getenv('ALLOWED_HOSTS', '*'))
 
 # Application definition
 
@@ -135,13 +147,14 @@ LOGOUT_REDIRECT_URL = reverse_lazy('login')
 
 ACCOUNT_ACTIVATION_DAYS = 7
 REGISTRATION_OPEN = True
-REGISTRATION_SALT = config('REGISTRATION_SALT', default='the-best-registration-salt')
+REGISTRATION_SALT = os.getenv('REGISTRATION_SALT', 'the-best-registration-salt')
 
-EMAIL_BACKEND = config('EMAIL_BACKEND', default='django.core.mail.backends.console.EmailBackend')
-EMAIL_HOST = config('EMAIL_HOST', default='smtp.yandex.ru')
-EMAIL_PORT = config('EMAIL_PORT', cast=int, default=465)
-EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='user@domain.com')
-EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='password')
-EMAIL_USE_SSL = config('EMAIL_USE_SSL', cast=bool, default=True)
+EMAIL_BACKEND = os.getenv('EMAIL_BACKEND', 'django.core.mail.backends.console.EmailBackend')
+EMAIL_HOST = os.getenv('EMAIL_HOST', 'smtp.yandex.ru')
+EMAIL_PORT = int(os.getenv('EMAIL_PORT', 465))
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', 'user@domain.com')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', 'password')
+EMAIL_USE_SSL = as_bool(os.getenv('EMAIL_USE_SSL', True))
+DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL', 'Notes Team <user@domain.com>')
 
 django_heroku.settings(locals())
