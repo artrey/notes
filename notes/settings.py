@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 from pathlib import Path
 from decouple import config
 from django.urls import reverse_lazy
+import django_heroku
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -31,7 +32,7 @@ def comma_separated_list(value: str) -> list:
     return [x.strip() for x in value.split(',') if x.strip()]
 
 
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='', cast=comma_separated_list)
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='*', cast=comma_separated_list)
 
 # Application definition
 
@@ -143,5 +144,4 @@ EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='user@domain.com')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='password')
 EMAIL_USE_SSL = config('EMAIL_USE_SSL', cast=bool, default=True)
 
-if DEBUG:
-    ALLOWED_HOSTS = '*'
+django_heroku.settings(locals())

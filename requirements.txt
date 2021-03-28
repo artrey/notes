@@ -2,3 +2,5 @@ django
 python-decouple
 psycopg2-binary
 django-registration
+gunicorn  # for heroku
+django-heroku  # for heroku
