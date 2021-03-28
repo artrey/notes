@@ -15,7 +15,7 @@ from apps.note.models import Note
 class NotesView(ListView):
     model = Note
     paginate_by = 20
-    ordering = '-created_at',
+    ordering = '-created_at'
 
     def get_queryset(self):
         qs = super().get_queryset()
