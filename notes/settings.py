@@ -32,7 +32,7 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'the-best-secret-key')
 def as_bool(value) -> bool:
     if isinstance(value, bool):
         return value
-    return value.lower() in ('1', 'true', 'yes')
+    return str(value).lower() in ('1', 'true', 'yes')
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -132,6 +132,8 @@ USE_L10N = True
 
 USE_TZ = True
 
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
@@ -159,4 +161,5 @@ EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', 'password')
 EMAIL_USE_SSL = as_bool(os.getenv('EMAIL_USE_SSL', True))
 DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL', 'Notes Team <user@domain.com>')
 
-django_heroku.settings(locals())
+if not DEBUG:
+    django_heroku.settings(locals())
