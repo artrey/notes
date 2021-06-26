@@ -1,14 +1,13 @@
 from urllib.parse import urlencode
 
-from django.conf import settings
-from django.contrib.auth import REDIRECT_FIELD_NAME
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q  # noqa: WPS347
 from django.http import HttpResponse
-from django.shortcuts import redirect
 from django.urls import reverse, reverse_lazy
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
 from django.views.generic.edit import ModelFormMixin
 
+from apps.note.mixins import OwnerOrAdminRequiredMixin, OwnerOrAdminOrPublicRequiredMixin
 from apps.note.models import Note
 
 
@@ -53,15 +52,9 @@ class NotesView(ListView):
         return context
 
 
-class NoteCreateView(CreateView):
+class NoteCreateView(LoginRequiredMixin, CreateView):
     model = Note
     fields = 'title', 'text', 'is_public'
-
-    def dispatch(self, request, *args, **kwargs):
-        if request.user.is_anonymous:
-            url_params = urlencode({REDIRECT_FIELD_NAME: reverse('note-create')})
-            return redirect(settings.LOGIN_URL + '?' + url_params)  # noqa: WPS336
-        return super().dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
         note = form.save(commit=False)
@@ -71,11 +64,11 @@ class NoteCreateView(CreateView):
         return super(ModelFormMixin, self).form_valid(form)  # noqa: WPS608
 
 
-class NoteDetailView(DetailView):
+class NoteDetailView(OwnerOrAdminOrPublicRequiredMixin, DetailView):
     model = Note
 
 
-class NoteDeleteView(DeleteView):
+class NoteDeleteView(OwnerOrAdminRequiredMixin, DeleteView):
     model = Note
     success_url = reverse_lazy('notes')
 
@@ -86,7 +79,7 @@ class NoteDeleteView(DeleteView):
         return super().delete(request, *args, **kwargs)
 
 
-class NoteEditView(UpdateView):
+class NoteEditView(OwnerOrAdminRequiredMixin, UpdateView):
     model = Note
     fields_public = 'title', 'text'
     fields_private = fields_public + ('is_public',)
