@@ -1,4 +1,4 @@
-# Web chat
+# Notes
 
 [![web-chat](https://github.com/artrey/notes/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/artrey/notes/actions/workflows/ci.yml)
 
