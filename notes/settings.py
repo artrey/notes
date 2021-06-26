@@ -13,8 +13,8 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 import os
 from pathlib import Path
 
-from django.urls import reverse_lazy
 import django_heroku
+from django.urls import reverse_lazy
 from dotenv import load_dotenv
 
 load_dotenv()  # take environment variables from .env.

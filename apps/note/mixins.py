@@ -4,8 +4,8 @@ from django.contrib.auth.mixins import UserPassesTestMixin
 class OwnerOrAdminRequiredMixin(UserPassesTestMixin):
     def test_func(self) -> bool:
         user = self.request.user
-        obj = self.get_object()
-        return user.is_superuser or user.is_staff or user == obj.author
+        note = self.get_object()
+        return user.is_superuser or user.is_staff or user == note.author
 
 
 class OwnerOrAdminOrPublicRequiredMixin(OwnerOrAdminRequiredMixin):

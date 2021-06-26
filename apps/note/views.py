@@ -7,7 +7,7 @@ from django.urls import reverse, reverse_lazy
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
 from django.views.generic.edit import ModelFormMixin
 
-from apps.note.mixins import OwnerOrAdminRequiredMixin, OwnerOrAdminOrPublicRequiredMixin
+from apps.note.mixins import OwnerOrAdminOrPublicRequiredMixin, OwnerOrAdminRequiredMixin
 from apps.note.models import Note
 
 
